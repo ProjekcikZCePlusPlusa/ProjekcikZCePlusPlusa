@@ -21,3 +21,4 @@ Dodatkowy stuff:
 +Wybór poziomów (może generator?)
 +Tryb hot seat dla dwóch osób na dzielonym ekranie
 +Multiplayer po sieci
+
