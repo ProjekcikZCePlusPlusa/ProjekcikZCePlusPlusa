@@ -5,9 +5,8 @@ Projekt Arkanoida
 Prosty projekt Arkanoida w C++.
 #################
 
-Preferowany silnik 2D (biblioteka):
-+SFML (najpewniej)
-+SDL
+Silnik 2D (biblioteka):
++SFML
 
 #################
 Do zrobienia:
