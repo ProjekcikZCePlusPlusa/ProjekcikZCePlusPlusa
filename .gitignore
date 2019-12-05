@@ -33,3 +33,6 @@ sfml-app
 *.exe
 *.out
 *.app
+
+#Visual Studio Files
+*.vs
