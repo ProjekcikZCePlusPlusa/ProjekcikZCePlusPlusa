@@ -1,9 +1,12 @@
-sfml-app: main.o
-	g++ main.o -o projekt_test -lsfml-graphics -lsfml-window -lsfml-system
+sfml-app: main.o GameScreen.o
+	g++ main.o GameScreen.o -o projekt_test -lsfml-graphics -lsfml-window -lsfml-system
 
 main.o: main.cpp
 	g++ -c main.cpp
 
+GameScreen.o: GameScreen.cpp
+	g++ -c GameScreen.cpp
+
 clean:
-	rm -f main.o projekt_test
+	rm -f *.o projekt_test
 
