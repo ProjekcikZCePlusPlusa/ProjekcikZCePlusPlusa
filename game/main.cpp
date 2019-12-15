@@ -1,5 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include <time.h>
+#include "GameScreen.h"
 using namespace sf;
 
 int main()
@@ -8,6 +9,9 @@ int main()
 
     RenderWindow app(VideoMode(520, 450), "Szkielet");
     app.setFramerateLimit(60);
+
+    GameScreen gameScreen;
+    gameScreen.start();
 
     Texture t1,t2,t3,t4;
     t1.loadFromFile("images/block01.png");
