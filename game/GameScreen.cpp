@@ -27,6 +27,9 @@ void GameScreen::start(RenderWindow &app)
     sPaddle.setScale(paddleWidth / paddleTextureSize.x, paddleThickness / paddleTextureSize.y);
     sPaddle.setPosition(width/2.0 - paddleWidth/2.0 , height * 95 / 100.0);
 
+    auto ballSize = paddleThickness * 1.66;
+    sBall.setScale(ballSize  / t3.getSize().x, ballSize  / t3.getSize().y);
+
     int blockCount = 1000;
 
     Sprite block[blockCount];
@@ -67,8 +70,8 @@ void GameScreen::start(RenderWindow &app)
             if ( FloatRect(x+3,y+3,6,6).intersects(block[i].getGlobalBounds()) )
             {block[i].setPosition(-100,0); dy=-dy;}
 
-        if (x<0 || x>520)  dx=-dx;
-        if (y<0 || y>450)  dy=-dy;
+        if (x<0 || x>width)  dx=-dx;
+        if (y<0 || y>height)  dy=-dy;
 
         if (Keyboard::isKeyPressed(Keyboard::Right)) sPaddle.move(6,0);
         if (Keyboard::isKeyPressed(Keyboard::Left)) sPaddle.move(-6,0);
