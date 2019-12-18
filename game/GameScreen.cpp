@@ -1,10 +1,12 @@
 #include "GameScreen.h"
 #include <SFML/Graphics.hpp>
+#include <iostream>
 using namespace sf;
 
-GameScreen::GameScreen()
+GameScreen::GameScreen(long screenWidth, long screenHeight)
 {
-
+    width = screenWidth;
+    height = screenHeight;
 }
 
 void GameScreen::start(RenderWindow &app)
@@ -15,17 +17,34 @@ void GameScreen::start(RenderWindow &app)
     t3.loadFromFile("images/ball.png");
     t4.loadFromFile("images/paddle.png");
 
-    Sprite sBackground(t2), sBall(t3), sPaddle(t4);
-    sPaddle.setPosition(300,440);
+    auto paddleTextureSize = t4.getSize();
+    auto paddleWidth = width / 6.0;
+    auto paddleThickness = height / 80.0;
 
-    Sprite block[1000];
+    std::cout << paddleTextureSize.y << std::endl;
+
+    Sprite sBackground(t2), sBall(t3), sPaddle(t4);
+    sPaddle.setScale(paddleWidth / paddleTextureSize.x, paddleThickness / paddleTextureSize.y);
+    sPaddle.setPosition(width/2.0 - paddleWidth/2.0 , height * 95 / 100.0);
+
+    auto ballSize = paddleThickness * 1.66;
+    sBall.setScale(ballSize  / t3.getSize().x, ballSize  / t3.getSize().y);
+
+    int blockCount = 1000;
+
+    Sprite block[blockCount];
+
+    auto blockWidth = (width - paddleWidth) / 10.0;
+    auto blockHeight = (height / 20.0);
+
 
     int n=0;
     for (int i=1;i<=10;i++)
         for (int j=1;j<=10;j++)
         {
             block[n].setTexture(t1);
-            block[n].setPosition(i*43,j*20);
+            block[n].setScale(blockWidth/t1.getSize().x, blockHeight/t1.getSize().y);
+            block[n].setPosition(i*blockWidth,j*blockHeight);
             n++;
         }
 
@@ -51,11 +70,18 @@ void GameScreen::start(RenderWindow &app)
             if ( FloatRect(x+3,y+3,6,6).intersects(block[i].getGlobalBounds()) )
             {block[i].setPosition(-100,0); dy=-dy;}
 
-        if (x<0 || x>520)  dx=-dx;
-        if (y<0 || y>450)  dy=-dy;
+        if (x<0 || x>width)  dx=-dx;
+        if (y<0 || y>height)  dy=-dy;
 
-        if (Keyboard::isKeyPressed(Keyboard::Right)) sPaddle.move(6,0);
-        if (Keyboard::isKeyPressed(Keyboard::Left)) sPaddle.move(-6,0);
+        if (Keyboard::isKeyPressed(Keyboard::Right)) {
+            sPaddle.move(6,0);
+            if(sPaddle.getGlobalBounds().left > width-(paddleWidth/2.0)) sPaddle.setPosition(width-(paddleWidth/2.0), sPaddle.getPosition().y);
+        }
+        if (Keyboard::isKeyPressed(Keyboard::Left)) {
+            sPaddle.move(-6,0);
+            if(sPaddle.getGlobalBounds().left < -(paddleWidth/2.0)) sPaddle.setPosition(-(paddleWidth/2.0), sPaddle.getPosition().y);
+        }
+        if (Keyboard::isKeyPressed(Keyboard::Escape)) app.close();
 
         if ( FloatRect(x,y,12,12).intersects(sPaddle.getGlobalBounds()) ) dy=-(rand()%5+2);
 

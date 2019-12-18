@@ -6,8 +6,12 @@ using namespace sf;
 
 class GameScreen{
 	public:
+        GameScreen(long width, long height);
 		GameScreen();
 		void start(RenderWindow &app);
+private:
+    long width;
+    long height;
 };
 
 

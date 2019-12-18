@@ -10,7 +10,7 @@ int main()
     RenderWindow app(VideoMode(520, 450), "Szkielet");
     app.setFramerateLimit(60);
 
-    GameScreen gameScreen;
+    GameScreen gameScreen(app.getSize().x, app.getSize().y);
     gameScreen.start(app);
 
 

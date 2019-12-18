@@ -38,3 +38,5 @@ sfml-app
 *.vs
 
 game/projekt_test
+/.idea/modules.xml
+/.idea/ProjekcikZCePlusPlusa.iml
