@@ -73,8 +73,14 @@ void GameScreen::start(RenderWindow &app)
         if (x<0 || x>width)  dx=-dx;
         if (y<0 || y>height)  dy=-dy;
 
-        if (Keyboard::isKeyPressed(Keyboard::Right)) sPaddle.move(6,0);
-        if (Keyboard::isKeyPressed(Keyboard::Left)) sPaddle.move(-6,0);
+        if (Keyboard::isKeyPressed(Keyboard::Right)) {
+            sPaddle.move(6,0);
+            if(sPaddle.getGlobalBounds().left > width-(paddleWidth/2.0)) sPaddle.setPosition(width-(paddleWidth/2.0), sPaddle.getPosition().y);
+        }
+        if (Keyboard::isKeyPressed(Keyboard::Left)) {
+            sPaddle.move(-6,0);
+            if(sPaddle.getGlobalBounds().left < -(paddleWidth/2.0)) sPaddle.setPosition(-(paddleWidth/2.0), sPaddle.getPosition().y);
+        }
         if (Keyboard::isKeyPressed(Keyboard::Escape)) app.close();
 
         if ( FloatRect(x,y,12,12).intersects(sPaddle.getGlobalBounds()) ) dy=-(rand()%5+2);
