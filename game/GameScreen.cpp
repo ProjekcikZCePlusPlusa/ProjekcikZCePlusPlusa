@@ -27,14 +27,21 @@ void GameScreen::start(RenderWindow &app)
     sPaddle.setScale(paddleWidth / paddleTextureSize.x, paddleThickness / paddleTextureSize.y);
     sPaddle.setPosition(width/2.0 - paddleWidth/2.0 , height * 95 / 100.0);
 
-    Sprite block[1000];
+    int blockCount = 1000;
+
+    Sprite block[blockCount];
+
+    auto blockWidth = (width - paddleWidth) / 10.0;
+    auto blockHeight = (height / 20.0);
+
 
     int n=0;
     for (int i=1;i<=10;i++)
         for (int j=1;j<=10;j++)
         {
             block[n].setTexture(t1);
-            block[n].setPosition(i*43,j*20);
+            block[n].setScale(blockWidth/t1.getSize().x, blockHeight/t1.getSize().y);
+            block[n].setPosition(i*blockWidth,j*blockHeight);
             n++;
         }
 
