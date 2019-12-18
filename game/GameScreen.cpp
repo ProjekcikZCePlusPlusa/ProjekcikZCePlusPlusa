@@ -1,10 +1,12 @@
 #include "GameScreen.h"
 #include <SFML/Graphics.hpp>
+#include <iostream>
 using namespace sf;
 
-GameScreen::GameScreen()
+GameScreen::GameScreen(long screenWidth, long screenHeight)
 {
-
+    width = screenWidth;
+    height = screenHeight;
 }
 
 void GameScreen::start(RenderWindow &app)
@@ -15,8 +17,15 @@ void GameScreen::start(RenderWindow &app)
     t3.loadFromFile("images/ball.png");
     t4.loadFromFile("images/paddle.png");
 
+    auto paddleTextureSize = t4.getSize();
+    auto paddleWidth = width / 6.0;
+    auto paddleThickness = height / 80.0;
+
+    std::cout << paddleTextureSize.y << std::endl;
+
     Sprite sBackground(t2), sBall(t3), sPaddle(t4);
-    sPaddle.setPosition(300,440);
+    sPaddle.setScale(paddleWidth / paddleTextureSize.x, paddleThickness / paddleTextureSize.y);
+    sPaddle.setPosition(width/2.0 - paddleWidth/2.0 , height * 95 / 100.0);
 
     Sprite block[1000];
 
