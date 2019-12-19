@@ -37,6 +37,7 @@ void GameScreen::start(RenderWindow &app)
     auto blockWidth = (width - paddleWidth) / 10.0;
     auto blockHeight = (height / 20.0);
 
+    sBackground.setScale(width * 1.0 / t2.getSize().x, height * 1.0 / t2.getSize().y);
 
     int n=0;
     for (int i=1;i<=10;i++)
@@ -48,7 +49,7 @@ void GameScreen::start(RenderWindow &app)
             n++;
         }
 
-    float dx=6, dy=5;
+    float dx=1, dy=1;
     float x=300, y=300;
 
     while (app.isOpen())
