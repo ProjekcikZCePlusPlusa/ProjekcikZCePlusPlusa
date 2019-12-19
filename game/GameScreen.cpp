@@ -50,8 +50,8 @@ void GameScreen::start(RenderWindow &app)
 
     
     float x=300, y=300;
-    float dx=6, dy=(dx*dx)-(y/3.0);
-
+    float dx=1.0, dy=1+(x/100.0);
+    std::cout << dy << std::endl;
     while (app.isOpen())
     {
         Event e;
