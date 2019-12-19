@@ -21,6 +21,7 @@ void GameScreen::start(RenderWindow &app)
     auto paddleWidth = width / 6.0;
     auto paddleThickness = height / 80.0;
 
+    std::cout << paddleTextureSize.y << std::endl;
 
     Sprite sBackground(t2), sBall(t3), sPaddle(t4);
     sPaddle.setScale(paddleWidth / paddleTextureSize.x, paddleThickness / paddleTextureSize.y);
@@ -41,10 +42,6 @@ void GameScreen::start(RenderWindow &app)
 
     sBackground.setScale(width * 1.0 / t2.getSize().x, height * 1.0 / t2.getSize().y);
 
-    std::cout << t2.getSize().x << std::endl;
-    std::cout << t2.getSize().y << std::endl;
-    std::cout << t2.getSize().x << std::endl;
-    std::cout << t2.getSize().x << std::endl;
 
     int n=0;
     for (int i=1;i<=10;i++)
@@ -56,7 +53,7 @@ void GameScreen::start(RenderWindow &app)
             n++;
         }
 
-    float dx=6, dy=5;
+
     float x=300, y=300;
 
     while (app.isOpen())
