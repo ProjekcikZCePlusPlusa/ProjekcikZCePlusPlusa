@@ -55,6 +55,7 @@ void GameScreen::start(RenderWindow &app)
 
 
     float x=300, y=300;
+    float dx = 2, dy = 2;
 
     while (app.isOpen())
     {
