@@ -11,6 +11,9 @@ GameScreen::GameScreen(long screenWidth, long screenHeight)
 
 void GameScreen::start(RenderWindow &app)
 {
+    Font font;
+    font.loadFromFile("fonts/Phetsarath_OT.ttf");
+
     Texture t1,t2,t3,t4;
     t1.loadFromFile("images/block01.png");
     t2.loadFromFile("images/background2.jpg");
