@@ -41,7 +41,6 @@ void GameScreen::start(RenderWindow &app)
   
     auto ballSize = paddleThickness * 1.66;
     sBall.setScale(ballSize  / t3.getSize().x, ballSize  / t3.getSize().y);
-    //sHp.setScale(ballSize  / t3.getSize().x, ballSize  / t3.getSize().y);
 
     int blockCount = 1000;
 
@@ -91,7 +90,6 @@ void GameScreen::start(RenderWindow &app)
 
         if (x<0 || x>width)  dx=-dx;
         if (y<0)  dy=-dy;
-        //-----------------------------
         if(y-ballSize*2 > height){
             dy=-dy;
             hp_left = hp_left-1;
@@ -99,14 +97,12 @@ void GameScreen::start(RenderWindow &app)
             x = x_center, y = 300;
             dx = 2, dy = 2;
             sPaddle.setPosition(width/2.0 - paddleWidth/2.0 , height * 95 / 100.0);
-
         }
 
         if(hp_left <= 0){
             dx = 0, dy = 0;
             x = x_center, y = 300;
         }
-        //-----------------------------
 
         if (Keyboard::isKeyPressed(Keyboard::Right)) {
             sPaddle.move(6,0);
