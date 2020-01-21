@@ -11,11 +11,15 @@ GameScreen::GameScreen(long screenWidth, long screenHeight)
 
 void GameScreen::start(RenderWindow &app)
 {
-    Texture t1,t2,t3,t4;
+    int hp_left = 3;
+    Font font;
+    Texture t1,t2,t3,t4,hp;
     t1.loadFromFile("images/block01.png");
     t2.loadFromFile("images/background2.jpg");
     t3.loadFromFile("images/ball.png");
-    t4.loadFromFile("images/paddle.png");
+    t4.loadFromFile("images/paddle.png");  
+    hp.loadFromFile("images/hp.png");  
+    font.loadFromFile("Font/OpenSans_Bold.ttf");
 
     auto paddleTextureSize = t4.getSize();
     auto paddleWidth = width / 6.0;
@@ -23,10 +27,18 @@ void GameScreen::start(RenderWindow &app)
 
     std::cout << paddleTextureSize.y << std::endl;
 
-    Sprite sBackground(t2), sBall(t3), sPaddle(t4);
+    Sprite sBackground(t2), sBall(t3), sPaddle(t4), sHp(hp);
     sPaddle.setScale(paddleWidth / paddleTextureSize.x, paddleThickness / paddleTextureSize.y);
     sPaddle.setPosition(width/2.0 - paddleWidth/2.0 , height * 95 / 100.0);
 
+    Text text("Przegrana", font);
+    text.setCharacterSize(60);
+    text.setStyle(Text::Bold);
+    text.setFillColor(Color::Red);
+    text.setOutlineColor(Color::Yellow);
+    text.setOutlineThickness(4);
+    text.setPosition(width/2-(text.getLocalBounds().width)/2, height/6);
+  
     auto ballSize = paddleThickness * 1.66;
     sBall.setScale(ballSize  / t3.getSize().x, ballSize  / t3.getSize().y);
 
@@ -53,8 +65,8 @@ void GameScreen::start(RenderWindow &app)
             n++;
         }
 
-
-    float x=300, y=300;
+    float x_center = (width/2+ballSize/2);
+    float x=x_center, y=300;
     float dx = 2, dy = 2;
 
     while (app.isOpen())
@@ -77,7 +89,20 @@ void GameScreen::start(RenderWindow &app)
             {block[i].setPosition(-100,0); dy=-dy;}
 
         if (x<0 || x>width)  dx=-dx;
-        if (y<0 || y>height)  dy=-dy;
+        if (y<0)  dy=-dy;
+        if(y-ballSize*2 > height){
+            dy=-dy;
+            hp_left = hp_left-1;
+            std::cout << "Pozostale zycia: " << hp_left << std::endl;
+            x = x_center, y = 300;
+            dx = 2, dy = 2;
+            sPaddle.setPosition(width/2.0 - paddleWidth/2.0 , height * 95 / 100.0);
+        }
+
+        if(hp_left <= 0){
+            dx = 0, dy = 0;
+            x = x_center, y = 300;
+        }
 
         if (Keyboard::isKeyPressed(Keyboard::Right)) {
             sPaddle.move(6,0);
@@ -97,10 +122,15 @@ void GameScreen::start(RenderWindow &app)
         app.draw(sBackground);
         app.draw(sBall);
         app.draw(sPaddle);
-
+        for(int i=0;i<hp_left;i++){
+            sHp.setPosition(width-25-(i*20),10);
+            app.draw(sHp);
+        }
         for (int i=0;i<n;i++)
             app.draw(block[i]);
-
+        if(hp_left <= 0){
+            app.draw(text);
+        }
         app.display();
     }
 
