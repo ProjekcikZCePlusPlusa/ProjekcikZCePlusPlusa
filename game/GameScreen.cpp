@@ -42,7 +42,8 @@ void GameScreen::start(RenderWindow &app)
     auto ballSize = paddleThickness * 1.66;
     sBall.setScale(ballSize  / t3.getSize().x, ballSize  / t3.getSize().y);
 
-    int blockCount = 1000;
+    int blockCount = 70;
+    int blocksPerRow = 10;
 
     Sprite block[blockCount];
 
@@ -56,13 +57,17 @@ void GameScreen::start(RenderWindow &app)
 
 
     int n=0;
-    for (int i=1;i<=10;i++)
-        for (int j=1;j<=10;j++)
+    for (int i=0;i<=blockCount/blocksPerRow;i++)
+        for (int j=1;j<=blocksPerRow;j++)
         {
-            block[n].setTexture(t1);
-            block[n].setScale(blockWidth/t1.getSize().x, blockHeight/t1.getSize().y);
-            block[n].setPosition(i*blockWidth,j*blockHeight);
-            n++;
+            int blocksLeft = blockCount - (i * blocksPerRow) - j;
+            if(blocksLeft >= 0)
+            {
+                block[n].setTexture(t1);
+                block[n].setScale(blockWidth/t1.getSize().x, blockHeight/t1.getSize().y);
+                block[n].setPosition(j*blockWidth,(i+1)*blockHeight);
+                n++;
+            }
         }
 
     float x_center = (width/2+ballSize/2);

@@ -36,6 +36,7 @@ sfml-app
 
 #Visual Studio Files
 *.vs
+*.vscode
 
 game/projekt_test
 /.idea/modules.xml
