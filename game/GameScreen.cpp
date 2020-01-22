@@ -72,7 +72,12 @@ void GameScreen::start(RenderWindow &app)
 
     float x_center = (width/2+ballSize/2);
     float x=x_center, y=300;
-    float dx = 2, dy = 2;
+    float dx = 200, dy = 200;
+
+    Clock deltaClock;
+    Time deltaTime;
+
+    float dt = 0;
 
     while (app.isOpen())
     {
@@ -83,24 +88,49 @@ void GameScreen::start(RenderWindow &app)
                 app.close();
         }
 
-        x+=dx;
+        x += dx * dt; //Updating x coordinate of the ball
+
         for (int i=0;i<n;i++)
             if ( FloatRect(x+3,y+3,6,6).intersects(block[i].getGlobalBounds()) )
             {block[i].setPosition(-100,0); dx=-dx;}
 
-        y+=dy;
+        y += dy * dt; //Updating y coordinate of the ball
+
         for (int i=0;i<n;i++)
             if ( FloatRect(x+3,y+3,6,6).intersects(block[i].getGlobalBounds()) )
-            {block[i].setPosition(-100,0); dy=-dy;}
+            {block[i].setPosition(-100,0); dy =- dy;}
 
-        if (x < 0 || x > width - ballSize)  dx =- dx;
-        if (y < 0)  dy =- dy;
+        if (x < 0 || x > width - ballSize){
+
+            dx =- dx;
+
+            if (x > width - ballSize){
+
+                x = width - ballSize;
+
+            }
+
+            else{
+
+                x = 0;
+
+            }
+        } 
+
+        if (y < 0){
+
+            dy =- dy;
+
+            y = 0;
+
+        }
+
         if(y - ballSize*2 > height){
-            dy=-dy;
+            dy =- dy;
             hp_left = hp_left-1;
             std::cout << "Pozostale zycia: " << hp_left << std::endl;
             x = x_center, y = 300;
-            dx = 2, dy = 2;
+            dx = 100, dy = 100;
             sPaddle.setPosition(width/2.0 - paddleWidth/2.0 , height * 95 / 100.0);
         }
 
@@ -110,18 +140,21 @@ void GameScreen::start(RenderWindow &app)
         }
 
         if (Keyboard::isKeyPressed(Keyboard::Right)) {
-            sPaddle.move(6,0);
+            sPaddle.move(250 * dt,0);
             if(sPaddle.getGlobalBounds().left > width - paddleWidth) sPaddle.setPosition(width - paddleWidth, sPaddle.getPosition().y);
         }
         if (Keyboard::isKeyPressed(Keyboard::Left)) {
-            sPaddle.move(-6,0);
+            sPaddle.move(-250 * dt,0);
             if(sPaddle.getGlobalBounds().left < 0) sPaddle.setPosition(0, sPaddle.getPosition().y);
         }
         if (Keyboard::isKeyPressed(Keyboard::Escape)) app.close();
 
-        if ( FloatRect(x,y,12,12).intersects(sPaddle.getGlobalBounds()) ) dy=-(rand()%5+2);
+        if ( FloatRect(x,y,12,12).intersects(sPaddle.getGlobalBounds()) ) dy = -(rand()%3+2) * 100 ;
 
         sBall.setPosition(x,y);
+
+        deltaTime = deltaClock.restart();
+        dt = deltaTime.asSeconds(); //Getting time passed between frames
 
         app.clear();
         app.draw(sBackground);
