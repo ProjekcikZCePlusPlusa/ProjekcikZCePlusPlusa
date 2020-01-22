@@ -42,8 +42,8 @@ void GameScreen::start(RenderWindow &app)
     auto ballSize = paddleThickness * 1.66;
     sBall.setScale(ballSize  / t3.getSize().x, ballSize  / t3.getSize().y);
 
-    int blockCount = 70;
-    int blocksPerRow = 10;
+    int blockCount = 90; //Tę zmienną zmienić jeżeli chcemy zmienić ilość bloków
+    int blocksPerRow = 10; //Tę zmienną zmienić jeżeli chcemy zmienić ilość bloków w jednym rzędzie
 
     Sprite block[blockCount];
 
@@ -93,9 +93,9 @@ void GameScreen::start(RenderWindow &app)
             if ( FloatRect(x+3,y+3,6,6).intersects(block[i].getGlobalBounds()) )
             {block[i].setPosition(-100,0); dy=-dy;}
 
-        if (x<0 || x>width)  dx=-dx;
-        if (y<0)  dy=-dy;
-        if(y-ballSize*2 > height){
+        if (x < 0 || x > width - ballSize)  dx =- dx;
+        if (y < 0)  dy =- dy;
+        if(y - ballSize*2 > height){
             dy=-dy;
             hp_left = hp_left-1;
             std::cout << "Pozostale zycia: " << hp_left << std::endl;
@@ -111,11 +111,11 @@ void GameScreen::start(RenderWindow &app)
 
         if (Keyboard::isKeyPressed(Keyboard::Right)) {
             sPaddle.move(6,0);
-            if(sPaddle.getGlobalBounds().left > width-(paddleWidth/2.0)) sPaddle.setPosition(width-(paddleWidth/2.0), sPaddle.getPosition().y);
+            if(sPaddle.getGlobalBounds().left > width - paddleWidth) sPaddle.setPosition(width - paddleWidth, sPaddle.getPosition().y);
         }
         if (Keyboard::isKeyPressed(Keyboard::Left)) {
             sPaddle.move(-6,0);
-            if(sPaddle.getGlobalBounds().left < -(paddleWidth/2.0)) sPaddle.setPosition(-(paddleWidth/2.0), sPaddle.getPosition().y);
+            if(sPaddle.getGlobalBounds().left < 0) sPaddle.setPosition(0, sPaddle.getPosition().y);
         }
         if (Keyboard::isKeyPressed(Keyboard::Escape)) app.close();
 
