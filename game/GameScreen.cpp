@@ -1,6 +1,8 @@
 #include "GameScreen.h"
+#include "Block.h"
 #include <SFML/Graphics.hpp>
 #include <iostream>
+
 using namespace sf;
 
 GameScreen::GameScreen(long screenWidth, long screenHeight)
