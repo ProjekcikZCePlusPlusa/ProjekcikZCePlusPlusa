@@ -9,9 +9,9 @@ class GameScreen{
         GameScreen(long width, long height);
 		GameScreen();
 		void start(RenderWindow &app);
-private:
-    long width;
-    long height;
+    private:
+        long width;
+        long height;
 };
 
 

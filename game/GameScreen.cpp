@@ -1,6 +1,8 @@
 #include "GameScreen.h"
+#include "Block.h"
 #include <SFML/Graphics.hpp>
 #include <iostream>
+
 using namespace sf;
 
 GameScreen::GameScreen(long screenWidth, long screenHeight)
@@ -16,6 +18,7 @@ void GameScreen::start(RenderWindow &app)
     int bon_x = -200;
     int bon_y = -200;
     Font font;
+
     Texture t1,t2,t3,t4,hp, bon;
     t1.loadFromFile("images/block01.png");
     t2.loadFromFile("images/background2.jpg");
@@ -25,13 +28,17 @@ void GameScreen::start(RenderWindow &app)
     bon.loadFromFile("images/bon.png");  
     font.loadFromFile("Font/OpenSans_Bold.ttf");
 
-    auto paddleTextureSize = t4.getSize();
+    t1.setSmooth(true);
+    t2.setSmooth(true);
+
+    auto paddleTextureSize = t3.getSize();
     auto paddleWidth = width / 6.0;
     auto paddleThickness = height / 80.0;
 
     std::cout << paddleTextureSize.y << std::endl;
 
     Sprite sBackground(t2), sBall(t3), sPaddle(t4), sHp(hp), sBon(bon);
+
     sPaddle.setScale(paddleWidth / paddleTextureSize.x, paddleThickness / paddleTextureSize.y);
     sPaddle.setPosition(width/2.0 - paddleWidth/2.0 , height * 95 / 100.0);
 
@@ -44,20 +51,21 @@ void GameScreen::start(RenderWindow &app)
     text.setPosition(width/2-(text.getLocalBounds().width)/2, height/6);
   
     auto ballSize = paddleThickness * 1.66;
-    sBall.setScale(ballSize  / t3.getSize().x, ballSize  / t3.getSize().y);
+    sBall.setScale(ballSize  / t2.getSize().x, ballSize  / t2.getSize().y);
 
     int blockCount = 90; //Tę zmienną zmienić jeżeli chcemy zmienić ilość bloków
     int blocksPerRow = 10; //Tę zmienną zmienić jeżeli chcemy zmienić ilość bloków w jednym rzędzie
 
-    Sprite block[blockCount];
 
     auto blockWidth = (width - paddleWidth) / 10.0;
     auto blockHeight = (height / 20.0);
 
+    Block block[blockCount];
+
     auto backgroundWidth = width;
     auto backgroundHeight = height;
 
-    sBackground.setScale(width * 1.0 / t2.getSize().x, height * 1.0 / t2.getSize().y);
+    sBackground.setScale(width * 1.0 / t1.getSize().x, height * 1.0 / t1.getSize().y);
 
 
     int n=0;
@@ -67,8 +75,9 @@ void GameScreen::start(RenderWindow &app)
             int blocksLeft = blockCount - (i * blocksPerRow) - j;
             if(blocksLeft >= 0)
             {
-                block[n].setTexture(t1);
-                block[n].setScale(blockWidth/t1.getSize().x, blockHeight/t1.getSize().y);
+                block[n].setHitsLeft(3);
+                block[n].setWidth(blockWidth);
+                block[n].setHeight(blockHeight);
                 block[n].setPosition(j*blockWidth,(i+1)*blockHeight);
                 n++;
             }
@@ -99,13 +108,13 @@ void GameScreen::start(RenderWindow &app)
 
         for (int i=0;i<n;i++)
             if ( FloatRect(x+3,y+3,6,6).intersects(block[i].getGlobalBounds()) )
-            {block[i].setPosition(-100,0); dx=-dx;}
+            {block[i].hit(); dx =- dx; x += dx * dt;}
 
         y += dy * dt; //Updating y coordinate of the ball
 
         for (int i=0;i<n;i++)
             if ( FloatRect(x+3,y+3,6,6).intersects(block[i].getGlobalBounds()) )
-            {block[i].setPosition(-100,0); dy =- dy;}
+            {block[i].hit(); dy =- dy; y += dy * dt;}
 
         if (x < 0 || x > width - ballSize){
 
@@ -196,6 +205,7 @@ void GameScreen::start(RenderWindow &app)
             sHp.setPosition(width-25-(i*20),10);
             app.draw(sHp);
         }
+
         for (int i=0;i<n;i++){
             app.draw(block[i]);
         }
