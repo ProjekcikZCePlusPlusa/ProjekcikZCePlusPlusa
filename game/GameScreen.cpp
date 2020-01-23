@@ -103,13 +103,13 @@ void GameScreen::start(RenderWindow &app)
 
         for (int i=0;i<n;i++)
             if ( FloatRect(x+3,y+3,6,6).intersects(block[i].getGlobalBounds()) )
-            {block[i].hit(); dx=-dx;}
+            {block[i].hit(); dx =- dx; x += dx * dt;}
 
         y += dy * dt; //Updating y coordinate of the ball
 
         for (int i=0;i<n;i++)
             if ( FloatRect(x+3,y+3,6,6).intersects(block[i].getGlobalBounds()) )
-            {block[i].hit(); dy =- dy;}
+            {block[i].hit(); dy =- dy; y += dy * dt;}
 
         if (x < 0 || x > width - ballSize){
 
