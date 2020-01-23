@@ -155,7 +155,15 @@ void GameScreen::start(RenderWindow &app)
         }
         if (Keyboard::isKeyPressed(Keyboard::Escape)) app.close();
 
-        if ( FloatRect(x,y,12,12).intersects(sPaddle.getGlobalBounds()) ) dy = -(rand()%3+2) * 100 ;
+        if ( FloatRect(x,y,12,12).intersects(sPaddle.getGlobalBounds()) ){
+            dy = -(rand()%3+2) * 100 ;
+            if(Keyboard::isKeyPressed(Keyboard::Right)){
+                dx = dx + 20;
+            }
+            else if(Keyboard::isKeyPressed(Keyboard::Left)){
+                dx = dx - 20;
+            }
+        } 
 
         sBall.setPosition(x,y);
 
