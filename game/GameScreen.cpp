@@ -21,6 +21,9 @@ void GameScreen::start(RenderWindow &app)
     hp.loadFromFile("images/hp.png");  
     font.loadFromFile("Font/OpenSans_Bold.ttf");
 
+    t1.setSmooth(true);
+    t3.setSmooth(true);
+
     auto paddleTextureSize = t4.getSize();
     auto paddleWidth = width / 6.0;
     auto paddleThickness = height / 80.0;
