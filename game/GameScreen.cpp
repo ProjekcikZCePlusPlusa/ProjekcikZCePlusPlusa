@@ -51,10 +51,11 @@ void GameScreen::start(RenderWindow &app)
     int blockCount = 90; //Tę zmienną zmienić jeżeli chcemy zmienić ilość bloków
     int blocksPerRow = 10; //Tę zmienną zmienić jeżeli chcemy zmienić ilość bloków w jednym rzędzie
 
-    Sprite block[blockCount];
 
     auto blockWidth = (width - paddleWidth) / 10.0;
     auto blockHeight = (height / 20.0);
+
+    Block block[blockCount];
 
     auto backgroundWidth = width;
     auto backgroundHeight = height;
@@ -69,8 +70,9 @@ void GameScreen::start(RenderWindow &app)
             int blocksLeft = blockCount - (i * blocksPerRow) - j;
             if(blocksLeft >= 0)
             {
-                block[n].setTexture(t1);
-                block[n].setScale(blockWidth/t1.getSize().x, blockHeight/t1.getSize().y);
+                block[n].setHitsLeft(3);
+                block[n].setWidth(blockWidth);
+                block[n].setHeight(blockHeight);
                 block[n].setPosition(j*blockWidth,(i+1)*blockHeight);
                 n++;
             }
@@ -101,13 +103,13 @@ void GameScreen::start(RenderWindow &app)
 
         for (int i=0;i<n;i++)
             if ( FloatRect(x+3,y+3,6,6).intersects(block[i].getGlobalBounds()) )
-            {block[i].setPosition(-100,0); dx=-dx;}
+            {block[i].hit(); dx=-dx;}
 
         y += dy * dt; //Updating y coordinate of the ball
 
         for (int i=0;i<n;i++)
             if ( FloatRect(x+3,y+3,6,6).intersects(block[i].getGlobalBounds()) )
-            {block[i].setPosition(-100,0); dy =- dy;}
+            {block[i].hit(); dy =- dy;}
 
         if (x < 0 || x > width - ballSize){
 
@@ -177,7 +179,7 @@ void GameScreen::start(RenderWindow &app)
             app.draw(sHp);
         }
         for (int i=0;i<n;i++)
-            app.draw(block[i]);
+            block[i].draw(app);
         if(hp_left <= 0){
             app.draw(text);
         }

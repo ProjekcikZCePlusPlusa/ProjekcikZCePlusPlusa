@@ -17,6 +17,7 @@ class Block{
     Sprite sprite;
 
     void loadTextures();
+    void setTexture();
 
     public:
 
@@ -27,10 +28,20 @@ class Block{
 
         void hit();
 
-        void setHitsLeft();
+        void setHitsLeft(int newHl);
 
-        void setX();
-        void setY();
+        void setX(int newX);
+        void setY(int newY);
+        void setPosition(int newX, int newY);
+        void setWidth(int newWidth);
+        void setHeight(int newHeight);
+
+        void draw(RenderWindow &window);
+
+        FloatRect getGlobalBounds();
+
+        void move(int dX, int dY);
+
 
 
 };
