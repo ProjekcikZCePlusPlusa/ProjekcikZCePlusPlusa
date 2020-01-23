@@ -11,14 +11,18 @@ GameScreen::GameScreen(long screenWidth, long screenHeight)
 
 void GameScreen::start(RenderWindow &app)
 {
+    double czas = 0;
     int hp_left = 3;
+    int bon_x = -200;
+    int bon_y = -200;
     Font font;
-    Texture t1,t2,t3,t4,hp;
+    Texture t1,t2,t3,t4,hp, bon;
     t1.loadFromFile("images/block01.png");
     t2.loadFromFile("images/background2.jpg");
     t3.loadFromFile("images/ball.png");
     t4.loadFromFile("images/paddle.png");  
     hp.loadFromFile("images/hp.png");  
+    bon.loadFromFile("images/bon.png");  
     font.loadFromFile("Font/OpenSans_Bold.ttf");
 
     auto paddleTextureSize = t4.getSize();
@@ -27,7 +31,7 @@ void GameScreen::start(RenderWindow &app)
 
     std::cout << paddleTextureSize.y << std::endl;
 
-    Sprite sBackground(t2), sBall(t3), sPaddle(t4), sHp(hp);
+    Sprite sBackground(t2), sBall(t3), sPaddle(t4), sHp(hp), sBon(bon);
     sPaddle.setScale(paddleWidth / paddleTextureSize.x, paddleThickness / paddleTextureSize.y);
     sPaddle.setPosition(width/2.0 - paddleWidth/2.0 , height * 95 / 100.0);
 
@@ -165,11 +169,25 @@ void GameScreen::start(RenderWindow &app)
             }
         } 
 
+        if ( FloatRect(x,y,12,12).intersects(sBon.getGlobalBounds()) ){
+            std::cout << "JEB!"<<std::endl;
+            hp_left += 1;
+            bon_x = -200;
+            bon_y = -200;
+        }
+
         sBall.setPosition(x,y);
+        sBon.setPosition(bon_x,bon_y);
+        czas = czas + deltaTime.asSeconds();
+
+        if(czas > 10){      //bonusy
+            bon_x = rand()%(width - 50);
+            bon_y = rand()%(height - 50);
+            czas = 0;
+        }
 
         deltaTime = deltaClock.restart();
         dt = deltaTime.asSeconds(); //Getting time passed between frames
-
         app.clear();
         app.draw(sBackground);
         app.draw(sBall);
@@ -178,8 +196,10 @@ void GameScreen::start(RenderWindow &app)
             sHp.setPosition(width-25-(i*20),10);
             app.draw(sHp);
         }
-        for (int i=0;i<n;i++)
+        for (int i=0;i<n;i++){
             app.draw(block[i]);
+        }
+        app.draw(sBon);
         if(hp_left <= 0){
             app.draw(text);
         }
