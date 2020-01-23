@@ -19,11 +19,10 @@ void GameScreen::start(RenderWindow &app)
     int bon_y = -200;
     Font font;
 
-    Texture t1,t2,t3,t4,hp, bon;
-    t1.loadFromFile("images/block01.png");
-    t2.loadFromFile("images/background2.jpg");
-    t3.loadFromFile("images/ball.png");
-    t4.loadFromFile("images/paddle.png");  
+    Texture t1,t2,t3,hp, bon;
+    t1.loadFromFile("images/background2.jpg");
+    t2.loadFromFile("images/ball.png");
+    t3.loadFromFile("images/paddle.png");  
     hp.loadFromFile("images/hp.png");  
     bon.loadFromFile("images/bon.png");  
     font.loadFromFile("Font/OpenSans_Bold.ttf");
@@ -37,7 +36,7 @@ void GameScreen::start(RenderWindow &app)
 
     std::cout << paddleTextureSize.y << std::endl;
 
-    Sprite sBackground(t2), sBall(t3), sPaddle(t4), sHp(hp), sBon(bon);
+    Sprite sBackground(t1), sBall(t2), sPaddle(t3), sHp(hp), sBon(bon);
 
     sPaddle.setScale(paddleWidth / paddleTextureSize.x, paddleThickness / paddleTextureSize.y);
     sPaddle.setPosition(width/2.0 - paddleWidth/2.0 , height * 95 / 100.0);
@@ -207,7 +206,7 @@ void GameScreen::start(RenderWindow &app)
         }
 
         for (int i=0;i<n;i++){
-            app.draw(block[i]);
+            block[i].draw(app);
         }
         app.draw(sBon);
         if(hp_left <= 0){
