@@ -16,7 +16,7 @@ void GameScreen::start(RenderWindow &app)
     int hp_left = 3;
     Font font;
     Texture t1,t2,t3,t4,hp;
-    t1.loadFromFile("images/block01.png");
+    
     t2.loadFromFile("images/background2.jpg");
     t3.loadFromFile("images/ball.png");
     t4.loadFromFile("images/paddle.png");  
@@ -47,7 +47,7 @@ void GameScreen::start(RenderWindow &app)
     int blockCount = 90; //Tę zmienną zmienić jeżeli chcemy zmienić ilość bloków
     int blocksPerRow = 10; //Tę zmienną zmienić jeżeli chcemy zmienić ilość bloków w jednym rzędzie
 
-    Sprite block[blockCount];
+    Block block[blockCount];
 
     auto blockWidth = (width - paddleWidth) / 10.0;
     auto blockHeight = (height / 20.0);
