@@ -75,12 +75,15 @@ void GameScreen::start(RenderWindow &app)
 
     float x_center = (width/2+ballSize/2);
     float x=x_center, y=300;
-    float dx = 200, dy = 200;
 
     Clock deltaClock;
     Time deltaTime;
 
     float dt = 0;
+    float dx = rand()%500-250, dy = 200;
+    while (dx < 30 && dx > -30){        //bez zakresu miedzy 70 a -70, bo jest za latwo
+        dx = rand()%500-250, dy = 200;
+    }
 
     while (app.isOpen())
     {
@@ -133,7 +136,10 @@ void GameScreen::start(RenderWindow &app)
             hp_left = hp_left-1;
             std::cout << "Pozostale zycia: " << hp_left << std::endl;
             x = x_center, y = 300;
-            dx = 100, dy = 100;
+            dx = rand()%500-250, dy = 200;
+            while (dx < 70 && dx > -70){
+                dx = rand()%500-250, dy = 200;
+            }
             sPaddle.setPosition(width/2.0 - paddleWidth/2.0 , height * 95 / 100.0);
         }
 
