@@ -15,25 +15,24 @@ void GameScreen::start(RenderWindow &app)
 {
     int hp_left = 3;
     Font font;
-    Texture t1,t2,t3,t4,hp;
+    Texture t1,t2,t3,hp;
     
-    t1.loadFromFile("images/block01.png");
-    t2.loadFromFile("images/background2.jpg");
-    t3.loadFromFile("images/ball.png");
-    t4.loadFromFile("images/paddle.png");  
+    t1.loadFromFile("images/background2.jpg");
+    t2.loadFromFile("images/ball.png");
+    t3.loadFromFile("images/paddle.png");  
     hp.loadFromFile("images/hp.png");  
     font.loadFromFile("Font/OpenSans_Bold.ttf");
 
     t1.setSmooth(true);
-    t3.setSmooth(true);
+    t2.setSmooth(true);
 
-    auto paddleTextureSize = t4.getSize();
+    auto paddleTextureSize = t3.getSize();
     auto paddleWidth = width / 6.0;
     auto paddleThickness = height / 80.0;
 
     std::cout << paddleTextureSize.y << std::endl;
 
-    Sprite sBackground(t2), sBall(t3), sPaddle(t4), sHp(hp);
+    Sprite sBackground(t1), sBall(t2), sPaddle(t3), sHp(hp);
     sPaddle.setScale(paddleWidth / paddleTextureSize.x, paddleThickness / paddleTextureSize.y);
     sPaddle.setPosition(width/2.0 - paddleWidth/2.0 , height * 95 / 100.0);
 
@@ -46,7 +45,7 @@ void GameScreen::start(RenderWindow &app)
     text.setPosition(width/2-(text.getLocalBounds().width)/2, height/6);
   
     auto ballSize = paddleThickness * 1.66;
-    sBall.setScale(ballSize  / t3.getSize().x, ballSize  / t3.getSize().y);
+    sBall.setScale(ballSize  / t2.getSize().x, ballSize  / t2.getSize().y);
 
     int blockCount = 90; //Tę zmienną zmienić jeżeli chcemy zmienić ilość bloków
     int blocksPerRow = 10; //Tę zmienną zmienić jeżeli chcemy zmienić ilość bloków w jednym rzędzie
@@ -60,7 +59,7 @@ void GameScreen::start(RenderWindow &app)
     auto backgroundWidth = width;
     auto backgroundHeight = height;
 
-    sBackground.setScale(width * 1.0 / t2.getSize().x, height * 1.0 / t2.getSize().y);
+    sBackground.setScale(width * 1.0 / t1.getSize().x, height * 1.0 / t1.getSize().y);
 
 
     int n=0;
