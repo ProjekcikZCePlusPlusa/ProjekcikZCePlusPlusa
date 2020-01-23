@@ -14,6 +14,8 @@ class Block{
 
     Texture hit1, hit2, hit3;
 
+    Sprite sprite;
+
     void loadTextures();
 
     public:
@@ -29,6 +31,7 @@ class Block{
 
         void setX();
         void setY();
+
 
 };
 
