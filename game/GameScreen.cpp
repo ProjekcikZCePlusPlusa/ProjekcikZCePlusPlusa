@@ -60,7 +60,7 @@ void GameScreen::start(RenderWindow &app)
     auto ballSize = paddleThickness * 1.66;
     sBall.setScale(ballSize  / t2.getSize().x, ballSize  / t2.getSize().y);
 
-    int blockCount = 10; //Tę zmienną zmienić jeżeli chcemy zmienić ilość bloków
+    int blockCount = 70; //Tę zmienną zmienić jeżeli chcemy zmienić ilość bloków
     int blocksPerRow = 10; //Tę zmienną zmienić jeżeli chcemy zmienić ilość bloków w jednym rzędzie
     int blocksLeft = blockCount; //Zmienna licząca ile bloków zostało do końca. Potrzebna do wygranej.
 
@@ -82,7 +82,7 @@ void GameScreen::start(RenderWindow &app)
             int blocksToDraw = blockCount - (i * blocksPerRow) - j;
             if(blocksToDraw >= 0)
             {
-                block[n].setHitsLeft(1);
+                block[n].setHitsLeft( (i % 3) + 1);
                 block[n].setWidth(blockWidth);
                 block[n].setHeight(blockHeight);
                 block[n].setPosition(j*blockWidth,(i+1)*blockHeight);
