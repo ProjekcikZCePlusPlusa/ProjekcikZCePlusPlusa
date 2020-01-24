@@ -27,7 +27,7 @@ class Block{
 
 
         void hit();
-        void hit(int &howMuchLeft); //To use if we want to count how much blocks remains to be destroyed.
+        void hit(int& howMuchLeft); //To use if we want to count how much blocks remains to be destroyed.
 
         void setHitsLeft(int newHl);
 

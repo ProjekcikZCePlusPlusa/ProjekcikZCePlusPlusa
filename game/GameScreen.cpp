@@ -60,7 +60,7 @@ void GameScreen::start(RenderWindow &app)
     auto ballSize = paddleThickness * 1.66;
     sBall.setScale(ballSize  / t2.getSize().x, ballSize  / t2.getSize().y);
 
-    int blockCount = 90; //Tę zmienną zmienić jeżeli chcemy zmienić ilość bloków
+    int blockCount = 10; //Tę zmienną zmienić jeżeli chcemy zmienić ilość bloków
     int blocksPerRow = 10; //Tę zmienną zmienić jeżeli chcemy zmienić ilość bloków w jednym rzędzie
     int blocksLeft = blockCount; //Zmienna licząca ile bloków zostało do końca. Potrzebna do wygranej.
 
@@ -82,7 +82,7 @@ void GameScreen::start(RenderWindow &app)
             int blocksToDraw = blockCount - (i * blocksPerRow) - j;
             if(blocksToDraw >= 0)
             {
-                block[n].setHitsLeft(3);
+                block[n].setHitsLeft(1);
                 block[n].setWidth(blockWidth);
                 block[n].setHeight(blockHeight);
                 block[n].setPosition(j*blockWidth,(i+1)*blockHeight);
@@ -117,13 +117,13 @@ void GameScreen::start(RenderWindow &app)
 
         for (int i=0;i<n;i++)
             if ( FloatRect(x+3,y+3,6,6).intersects(block[i].getGlobalBounds()) )
-            {block[i].hit(); dx =- dx; x += dx * dt;}
+            {block[i].hit(blocksLeft); dx =- dx; x += dx * dt;}
 
         y += dy * dt; //Updating y coordinate of the ball
 
         for (int i=0;i<n;i++)
             if ( FloatRect(x+3,y+3,6,6).intersects(block[i].getGlobalBounds()) )
-            {block[i].hit(); dy =- dy; y += dy * dt;}
+            {block[i].hit(blocksLeft); dy =- dy; y += dy * dt;}
 
         if (x < 0 || x > width - ballSize){
 
@@ -222,7 +222,6 @@ void GameScreen::start(RenderWindow &app)
         if(hp_left <= 0){
             app.draw(defeatMessage);
         }
-        app.display();
 
         if(blocksLeft <= 0){ // Wygrana
 
@@ -231,6 +230,9 @@ void GameScreen::start(RenderWindow &app)
             app.draw(victoryMessage);   
 
         }
+
+        app.display();
+
     }
 
 }

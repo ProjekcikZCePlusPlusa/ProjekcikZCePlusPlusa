@@ -149,7 +149,7 @@ void Block::hit(){
 }
 
 
-void Block::hit(int &howMuchLeft){
+void Block::hit(int& howMuchLeft){
 
     hits_left -= 1;
 
