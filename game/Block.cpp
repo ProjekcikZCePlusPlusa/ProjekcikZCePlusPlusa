@@ -147,3 +147,19 @@ void Block::hit(){
     setTexture();
 
 }
+
+
+void Block::hit(int &howMuchLeft){
+
+    hits_left -= 1;
+
+    if(hits_left <= 0){
+
+        setPosition(-100, 0);
+        howMuchLeft -= 1;
+
+    }
+
+    setTexture();
+
+}

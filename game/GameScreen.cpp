@@ -41,20 +41,28 @@ void GameScreen::start(RenderWindow &app)
     sPaddle.setScale(paddleWidth / paddleTextureSize.x, paddleThickness / paddleTextureSize.y);
     sPaddle.setPosition(width/2.0 - paddleWidth/2.0 , height * 95 / 100.0);
 
-    Text text("Przegrana", font);
-    text.setCharacterSize(60);
-    text.setStyle(Text::Bold);
-    text.setFillColor(Color::Red);
-    text.setOutlineColor(Color::Yellow);
-    text.setOutlineThickness(4);
-    text.setPosition(width/2-(text.getLocalBounds().width)/2, height/6);
+    Text defeatMessage("Przegrana", font);
+    defeatMessage.setCharacterSize(60);
+    defeatMessage.setStyle(Text::Bold);
+    defeatMessage.setFillColor(Color::Red);
+    defeatMessage.setOutlineColor(Color::Yellow);
+    defeatMessage.setOutlineThickness(4);
+    defeatMessage.setPosition(width/2-(defeatMessage.getLocalBounds().width)/2, height/6);
+
+    Text victoryMessage("Wygrana!", font);
+    victoryMessage.setCharacterSize(60);
+    victoryMessage.setStyle(Text::Bold);
+    victoryMessage.setFillColor(Color::Red);
+    victoryMessage.setOutlineColor(Color::Yellow);
+    victoryMessage.setOutlineThickness(4);
+    victoryMessage.setPosition(width/2-(victoryMessage.getLocalBounds().width)/2, height/6);
   
     auto ballSize = paddleThickness * 1.66;
     sBall.setScale(ballSize  / t2.getSize().x, ballSize  / t2.getSize().y);
 
     int blockCount = 90; //Tę zmienną zmienić jeżeli chcemy zmienić ilość bloków
     int blocksPerRow = 10; //Tę zmienną zmienić jeżeli chcemy zmienić ilość bloków w jednym rzędzie
-
+    int blocksLeft = blockCount; //Zmienna licząca ile bloków zostało do końca. Potrzebna do wygranej.
 
     auto blockWidth = (width - paddleWidth) / 10.0;
     auto blockHeight = (height / 20.0);
@@ -71,8 +79,8 @@ void GameScreen::start(RenderWindow &app)
     for (int i=0;i<=blockCount/blocksPerRow;i++)
         for (int j=1;j<=blocksPerRow;j++)
         {
-            int blocksLeft = blockCount - (i * blocksPerRow) - j;
-            if(blocksLeft >= 0)
+            int blocksToDraw = blockCount - (i * blocksPerRow) - j;
+            if(blocksToDraw >= 0)
             {
                 block[n].setHitsLeft(3);
                 block[n].setWidth(blockWidth);
@@ -94,9 +102,11 @@ void GameScreen::start(RenderWindow &app)
         dx = rand()%500-250, dy = 200;
     }
 
+
     while (app.isOpen())
     {
         Event e;
+
         while (app.pollEvent(e))
         {
             if (e.type == Event::Closed)
@@ -210,9 +220,17 @@ void GameScreen::start(RenderWindow &app)
         }
         app.draw(sBon);
         if(hp_left <= 0){
-            app.draw(text);
+            app.draw(defeatMessage);
         }
         app.display();
+
+        if(blocksLeft <= 0){ // Wygrana
+
+            dx = 0, dy = 0;
+            x = x_center, y = 300; 
+            app.draw(victoryMessage);   
+
+        }
     }
 
 }
