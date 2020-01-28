@@ -1,5 +1,6 @@
 #include "GameScreen.h"
 #include "Block.h"
+#include "MenuScreen.h"
 #include <SFML/Graphics.hpp>
 #include <iostream>
 
@@ -27,8 +28,8 @@ void GameScreen::start(RenderWindow &app)
     bon.loadFromFile("images/bon.png");  
     font.loadFromFile("Font/OpenSans_Bold.ttf");
 
-    t1.setSmooth(true);
     t2.setSmooth(true);
+    t3.setSmooth(true);
 
     auto paddleTextureSize = t3.getSize();
     auto paddleWidth = width / 6.0;
@@ -74,6 +75,9 @@ void GameScreen::start(RenderWindow &app)
 
     sBackground.setScale(width * 1.0 / t1.getSize().x, height * 1.0 / t1.getSize().y);
 
+    bool resume = false;
+    bool * resumepointer = &resume;
+
 
     int n=0;
     for (int i=0;i<=blockCount/blocksPerRow;i++)
@@ -98,6 +102,11 @@ void GameScreen::start(RenderWindow &app)
 
     float dt = 0;
     float dx = rand()%500-250, dy = 200;
+
+    MenuScreen menu(font, width, height);
+
+    menu.render(app, sBackground, deltaClock);
+
     while (dx < 30 && dx > -30){        //bez zakresu miedzy 70 a -70, bo jest za latwo
         dx = rand()%500-250, dy = 200;
     }
@@ -107,19 +116,43 @@ void GameScreen::start(RenderWindow &app)
     {
         Event e;
 
+
         while (app.pollEvent(e))
         {
-            if (e.type == Event::Closed)
-                app.close();
+
+            switch (e.type)
+            {
+                // window closed
+                case Event::Closed:
+                    app.close();
+                    break;
+
+                case Event::KeyReleased:
+
+                    if(e.key.code == Keyboard::Escape){
+
+                        menu.render(app, sBackground, deltaClock);
+
+                    }
+                    break;
+
+                default:
+                    break;
+            }
         }
 
+        float startingdx = dx, startingdy = dy;
+
         x += dx * dt; //Updating x coordinate of the ball
+
 
         for (int i=0;i<n;i++)
             if ( FloatRect(x+3,y+3,6,6).intersects(block[i].getGlobalBounds()) )
             {block[i].hit(blocksLeft); dx =- dx; x += dx * dt;}
 
+
         y += dy * dt; //Updating y coordinate of the ball
+
 
         for (int i=0;i<n;i++)
             if ( FloatRect(x+3,y+3,6,6).intersects(block[i].getGlobalBounds()) )
@@ -175,7 +208,6 @@ void GameScreen::start(RenderWindow &app)
             sPaddle.move(-250 * dt,0);
             if(sPaddle.getGlobalBounds().left < 0) sPaddle.setPosition(0, sPaddle.getPosition().y);
         }
-        if (Keyboard::isKeyPressed(Keyboard::Escape)) app.close();
 
         if ( FloatRect(x,y,12,12).intersects(sPaddle.getGlobalBounds()) ){
             dy = -(rand()%3+2) * 100 ;
@@ -206,6 +238,8 @@ void GameScreen::start(RenderWindow &app)
 
         deltaTime = deltaClock.restart();
         dt = deltaTime.asSeconds(); //Getting time passed between frames
+
+
         app.clear();
         app.draw(sBackground);
         app.draw(sBall);
