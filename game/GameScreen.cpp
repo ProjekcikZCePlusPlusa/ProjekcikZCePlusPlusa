@@ -123,8 +123,17 @@ void GameScreen::start(RenderWindow &app)
             switch (e.type)
             {
                 // window closed
-                case sf::Event::Closed:
+                case Event::Closed:
                     app.close();
+                    break;
+
+                case Event::KeyReleased:
+
+                    if(e.key.code == Keyboard::Escape){
+
+                        menu.render(app, sBackground, deltaClock);
+
+                    }
                     break;
 
                 default:
@@ -133,13 +142,6 @@ void GameScreen::start(RenderWindow &app)
         }
 
         float startingdx = dx, startingdy = dy;
-
-        if (Keyboard::isKeyPressed(Keyboard::Escape)){ 
-
-            menu.render(app, sBackground, deltaClock);
-
-        }
-
 
         x += dx * dt; //Updating x coordinate of the ball
 
