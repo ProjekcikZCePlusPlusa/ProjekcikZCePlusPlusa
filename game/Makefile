@@ -1,4 +1,4 @@
-sfml-app: main.o GameScreen.o Block.o
+sfml-app: main.o GameScreen.o Block.o MenuScreen.o
 	g++ main.o GameScreen.o Block.o MenuScreen.o -o projekt_test -lsfml-graphics -lsfml-window -lsfml-system
 
 main.o: main.cpp
