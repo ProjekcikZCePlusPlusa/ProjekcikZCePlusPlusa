@@ -11,7 +11,9 @@ class MenuScreen{
     public:
 
         MenuScreen(Font appFont,float windowWidth, float windowHeight);
-        void render(RenderWindow &window, Sprite &Background);
+        MenuScreen();
+        ~MenuScreen();
+        void render(RenderWindow &window, Sprite &Background, Clock &deltaClock);
 
 };
 

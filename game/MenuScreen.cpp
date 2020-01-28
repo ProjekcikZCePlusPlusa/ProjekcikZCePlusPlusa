@@ -11,8 +11,17 @@ MenuScreen::MenuScreen(Font appFont, float width, float height)
     ;
 }
 
+MenuScreen::MenuScreen()
+{
+    ;
+}
 
-void MenuScreen::render(RenderWindow &window, Sprite &Background){
+MenuScreen::~MenuScreen(){
+    ;
+}
+
+
+void MenuScreen::render(RenderWindow &window, Sprite &Background, Clock &deltaClock){
 
     Text resume("Resume", font);
     Text quit("Quit", font);
@@ -30,35 +39,68 @@ void MenuScreen::render(RenderWindow &window, Sprite &Background){
     quit.setFillColor(Color::White);
     quit.setOutlineColor(Color::Black);
     quit.setOutlineThickness(4);
-    quit.setPosition(windowWidth/2-(quit.getLocalBounds().width)/2, windowHeight/4);
+    quit.setPosition(windowWidth/2-(quit.getLocalBounds().width)/2, windowHeight/2);
 
     
-    while(window.isOpen() && !endScreen){
+    while(!endScreen && window.isOpen()){
+
 
         Event e;
+
+        deltaClock.restart();
+
+        endScreen = false;
+
+
+        while (window.pollEvent(e))
+        {
+
+            switch (e.type)
+            {
+                // window closed
+                case sf::Event::Closed:
+                    window.close();
+                    break;
+
+                default:
+                    break;
+            }
+        }
 
         if(Mouse::isButtonPressed(Mouse::Left)){
 
             int mouseX = Mouse::getPosition(window).x;
             int mouseY = Mouse::getPosition(window).y;
 
+
             if(resume.getGlobalBounds().contains(mouseX, mouseY)){
 
                 endScreen = true;
-
+                
             }
 
             else if(quit.getGlobalBounds().contains(mouseX, mouseY)){
 
+                endScreen = true;
                 window.close();
 
             }
 
         }
 
+        /*if(Keyboard::isKeyPressed(Keyboard::Escape)){
+
+            endScreen = true;
+
+        }*/
+
+
+    window.draw(Background);
+    window.draw(resume);
+    window.draw(quit);
+    window.display();
+
 
     }
-
-    
 
 }
