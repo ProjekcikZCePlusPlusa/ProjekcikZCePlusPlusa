@@ -27,8 +27,8 @@ void GameScreen::start(RenderWindow &app)
     bon.loadFromFile("images/bon.png");  
     font.loadFromFile("Font/OpenSans_Bold.ttf");
 
-    t1.setSmooth(true);
     t2.setSmooth(true);
+    t3.setSmooth(true);
 
     auto paddleTextureSize = t3.getSize();
     auto paddleWidth = width / 6.0;
