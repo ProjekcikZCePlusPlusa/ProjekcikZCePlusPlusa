@@ -1,5 +1,6 @@
 #include "GameScreen.h"
 #include "Block.h"
+#include "MenuScreen.h"
 #include <SFML/Graphics.hpp>
 #include <iostream>
 
@@ -73,6 +74,9 @@ void GameScreen::start(RenderWindow &app)
     auto backgroundHeight = height;
 
     sBackground.setScale(width * 1.0 / t1.getSize().x, height * 1.0 / t1.getSize().y);
+
+    MenuScreen menu(font, width, height);
+    menu.render(app, sBackground);
 
 
     int n=0;
@@ -206,6 +210,8 @@ void GameScreen::start(RenderWindow &app)
 
         deltaTime = deltaClock.restart();
         dt = deltaTime.asSeconds(); //Getting time passed between frames
+
+
         app.clear();
         app.draw(sBackground);
         app.draw(sBall);

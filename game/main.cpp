@@ -11,6 +11,7 @@ int main()
     app.setFramerateLimit(60);
     app.setVerticalSyncEnabled(true);
 
+    
     GameScreen gameScreen(app.getSize().x, app.getSize().y);
     gameScreen.start(app);
 
