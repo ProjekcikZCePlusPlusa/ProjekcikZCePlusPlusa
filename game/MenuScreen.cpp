@@ -43,9 +43,7 @@ void MenuScreen::render(RenderWindow &window, Sprite &Background, Clock &deltaCl
     Text quit("Quit", font);
     bool endScreen = false;
     bool firstTimeInResume = true;
-    bool firstTimeOutResume = true;
     bool firstTimeInQuit = true;
-    bool firstTimeOutQuit = false;
 
 
     resume.setCharacterSize(60);
@@ -106,15 +104,13 @@ void MenuScreen::render(RenderWindow &window, Sprite &Background, Clock &deltaCl
             if(firstTimeInResume) {
                 mouseIn(resume);
                 firstTimeInResume = false;
-                firstTimeOutResume = true;
             }
 
         }
         else {
-            if(firstTimeOutResume){
+            if(!firstTimeInResume){
                 mouseOut(resume);
                 firstTimeInResume = true;
-                firstTimeOutResume = false;
             }
 
 
@@ -125,16 +121,14 @@ void MenuScreen::render(RenderWindow &window, Sprite &Background, Clock &deltaCl
             if(firstTimeInQuit){
                 mouseIn(quit);
                 firstTimeInQuit = false;
-                firstTimeOutQuit = true;
             }
 
         }
         else{
 
-            if(firstTimeOutQuit){
+            if(!firstTimeInQuit){
                 mouseOut(quit);
                 firstTimeInQuit = true;
-                firstTimeOutQuit = false;
             }
             
 
