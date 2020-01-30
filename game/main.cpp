@@ -7,7 +7,7 @@ int main()
 {
     srand(time(0));
 
-    RenderWindow app(VideoMode(700, 500), "Szkielet");
+    RenderWindow app(VideoMode(700, 500), "Arkanoid");
     app.setFramerateLimit(60);
     app.setVerticalSyncEnabled(true);
 

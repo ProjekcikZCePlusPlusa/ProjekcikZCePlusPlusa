@@ -220,7 +220,6 @@ void GameScreen::start(RenderWindow &app)
         } 
 
         if ( FloatRect(x,y,12,12).intersects(sBon.getGlobalBounds()) ){
-            std::cout << "JEB!"<<std::endl;
             hp_left += 1;
             bon_x = -200;
             bon_y = -200;

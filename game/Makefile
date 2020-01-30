@@ -1,5 +1,5 @@
-sfml-app: main.o GameScreen.o Block.o MenuScreen.o
-	g++ main.o GameScreen.o Block.o MenuScreen.o -o projekt_test -lsfml-graphics -lsfml-window -lsfml-system
+Arkanoid: main.o GameScreen.o Block.o MenuScreen.o
+	g++ main.o GameScreen.o Block.o MenuScreen.o -o Arkanoid -lsfml-graphics -lsfml-window -lsfml-system
 
 main.o: main.cpp
 	g++ -c main.cpp
@@ -14,5 +14,5 @@ MenuScreen.o: MenuScreen.cpp
 	g++ -c MenuScreen.cpp
 
 clean:
-	rm -f *.o projekt_test
+	rm -f *.o Arkanoid
 
